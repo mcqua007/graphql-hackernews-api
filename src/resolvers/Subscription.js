@@ -9,18 +9,18 @@ const newTask = {
   },
 }
 
-// function newTodoSubscribe(parent, args, context, info) {
-//   return context.prisma.$subscribe.todo({ mutation_in: ['CREATED'] }).node()
-// }
+function newTodoSubscribe(parent, args, context, info) {
+  return context.prisma.$subscribe.todo({ mutation_in: ['CREATED'] }).node()
+}
 
-// const newTodo = {
-//   subscribe: newTodoSubscribe,
-//   resolve: payload => {
-//     return payload
-//   },
-// }
+const newTodo = {
+  subscribe: newTodoSubscribe,
+  resolve: payload => {
+    return payload
+  },
+}
 
 module.exports = {
   newTask,
-//   newTodo,
+  newTodo,
 }
