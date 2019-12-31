@@ -34,36 +34,28 @@ async function login(parent, args, context, info) {
   }
 }
 
-function post(parent, args, context, info) {
+function createTask(parent, args, context, info) {
   const userId = getUserId(context)
-  return context.prisma.createLink({
-    url: args.url,
+  return context.prisma.createTask({
+    name: args.name,
     description: args.description,
-    postedBy: { connect: { id: userId } },
+    createdBy: { connect: { id: userId } },
   })
 }
 
-async function vote(parent, args, context, info) {
-
+function createTodo(parent, args, context, info) {
   const userId = getUserId(context)
-
-  const linkExists = await context.prisma.$exists.vote({
-    user: { id: userId },
-    link: { id: args.linkId },
-  })
-  if (linkExists) {
-    throw new Error(`Already voted for link: ${args.linkId}`)
-  }
-
-  return context.prisma.createVote({
-    user: { connect: { id: userId } },
-    link: { connect: { id: args.linkId } },
+  return context.prisma.createTodo({
+    name: args.name,
+    taskId:  { connect: { id: args.taskId } },
+    createdBy: { connect: { id: userId } },
   })
 }
+
 
 module.exports = {
   signup,
   login,
-  post,
-  vote,
+  createTask,
+  createTodo,
 }

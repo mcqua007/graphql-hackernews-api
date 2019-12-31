@@ -5,7 +5,7 @@ var typeDefs = require("./prisma-schema").typeDefs;
 
 var models = [
   {
-    name: "Link",
+    name: "Task",
     embedded: false
   },
   {
@@ -13,13 +13,13 @@ var models = [
     embedded: false
   },
   {
-    name: "Vote",
+    name: "Todo",
     embedded: false
   }
 ];
 exports.Prisma = prisma_lib_1.makePrismaClientClass({
   typeDefs,
   models,
-  endpoint: `https://us1.prisma.sh/sean-07306b/hackernews-clone/dev`
+  endpoint: `https://us1.prisma.sh/sean-07306b/hacker-news-clone-2/dev`
 });
 exports.prisma = new exports.Prisma();

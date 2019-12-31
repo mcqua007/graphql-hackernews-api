@@ -16,9 +16,9 @@ export type AtLeastOne<T, U = { [K in keyof T]: Pick<T, K> }> = Partial<T> &
 export type Maybe<T> = T | undefined | null;
 
 export interface Exists {
-  link: (where?: LinkWhereInput) => Promise<boolean>;
+  task: (where?: TaskWhereInput) => Promise<boolean>;
+  todo: (where?: TodoWhereInput) => Promise<boolean>;
   user: (where?: UserWhereInput) => Promise<boolean>;
-  vote: (where?: VoteWhereInput) => Promise<boolean>;
 }
 
 export interface Node {}
@@ -40,25 +40,44 @@ export interface Prisma {
    * Queries
    */
 
-  link: (where: LinkWhereUniqueInput) => LinkNullablePromise;
-  links: (args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  task: (where: TaskWhereUniqueInput) => TaskNullablePromise;
+  tasks: (args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => FragmentableArray<Link>;
-  linksConnection: (args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
+  }) => FragmentableArray<Task>;
+  tasksConnection: (args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
     first?: Int;
     last?: Int;
-  }) => LinkConnectionPromise;
+  }) => TaskConnectionPromise;
+  todo: (where: TodoWhereUniqueInput) => TodoNullablePromise;
+  todoes: (args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => FragmentableArray<Todo>;
+  todoesConnection: (args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
+    skip?: Int;
+    after?: String;
+    before?: String;
+    first?: Int;
+    last?: Int;
+  }) => TodoConnectionPromise;
   user: (where: UserWhereUniqueInput) => UserNullablePromise;
   users: (args?: {
     where?: UserWhereInput;
@@ -78,47 +97,44 @@ export interface Prisma {
     first?: Int;
     last?: Int;
   }) => UserConnectionPromise;
-  vote: (where: VoteWhereUniqueInput) => VoteNullablePromise;
-  votes: (args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => FragmentableArray<Vote>;
-  votesConnection: (args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => VoteConnectionPromise;
   node: (args: { id: ID_Output }) => Node;
 
   /**
    * Mutations
    */
 
-  createLink: (data: LinkCreateInput) => LinkPromise;
-  updateLink: (args: {
-    data: LinkUpdateInput;
-    where: LinkWhereUniqueInput;
-  }) => LinkPromise;
-  updateManyLinks: (args: {
-    data: LinkUpdateManyMutationInput;
-    where?: LinkWhereInput;
+  createTask: (data: TaskCreateInput) => TaskPromise;
+  updateTask: (args: {
+    data: TaskUpdateInput;
+    where: TaskWhereUniqueInput;
+  }) => TaskPromise;
+  updateManyTasks: (args: {
+    data: TaskUpdateManyMutationInput;
+    where?: TaskWhereInput;
   }) => BatchPayloadPromise;
-  upsertLink: (args: {
-    where: LinkWhereUniqueInput;
-    create: LinkCreateInput;
-    update: LinkUpdateInput;
-  }) => LinkPromise;
-  deleteLink: (where: LinkWhereUniqueInput) => LinkPromise;
-  deleteManyLinks: (where?: LinkWhereInput) => BatchPayloadPromise;
+  upsertTask: (args: {
+    where: TaskWhereUniqueInput;
+    create: TaskCreateInput;
+    update: TaskUpdateInput;
+  }) => TaskPromise;
+  deleteTask: (where: TaskWhereUniqueInput) => TaskPromise;
+  deleteManyTasks: (where?: TaskWhereInput) => BatchPayloadPromise;
+  createTodo: (data: TodoCreateInput) => TodoPromise;
+  updateTodo: (args: {
+    data: TodoUpdateInput;
+    where: TodoWhereUniqueInput;
+  }) => TodoPromise;
+  updateManyTodoes: (args: {
+    data: TodoUpdateManyMutationInput;
+    where?: TodoWhereInput;
+  }) => BatchPayloadPromise;
+  upsertTodo: (args: {
+    where: TodoWhereUniqueInput;
+    create: TodoCreateInput;
+    update: TodoUpdateInput;
+  }) => TodoPromise;
+  deleteTodo: (where: TodoWhereUniqueInput) => TodoPromise;
+  deleteManyTodoes: (where?: TodoWhereInput) => BatchPayloadPromise;
   createUser: (data: UserCreateInput) => UserPromise;
   updateUser: (args: {
     data: UserUpdateInput;
@@ -135,18 +151,6 @@ export interface Prisma {
   }) => UserPromise;
   deleteUser: (where: UserWhereUniqueInput) => UserPromise;
   deleteManyUsers: (where?: UserWhereInput) => BatchPayloadPromise;
-  createVote: (data: VoteCreateInput) => VotePromise;
-  updateVote: (args: {
-    data: VoteUpdateInput;
-    where: VoteWhereUniqueInput;
-  }) => VotePromise;
-  upsertVote: (args: {
-    where: VoteWhereUniqueInput;
-    create: VoteCreateInput;
-    update: VoteUpdateInput;
-  }) => VotePromise;
-  deleteVote: (where: VoteWhereUniqueInput) => VotePromise;
-  deleteManyVotes: (where?: VoteWhereInput) => BatchPayloadPromise;
 
   /**
    * Subscriptions
@@ -156,15 +160,15 @@ export interface Prisma {
 }
 
 export interface Subscription {
-  link: (
-    where?: LinkSubscriptionWhereInput
-  ) => LinkSubscriptionPayloadSubscription;
+  task: (
+    where?: TaskSubscriptionWhereInput
+  ) => TaskSubscriptionPayloadSubscription;
+  todo: (
+    where?: TodoSubscriptionWhereInput
+  ) => TodoSubscriptionPayloadSubscription;
   user: (
     where?: UserSubscriptionWhereInput
   ) => UserSubscriptionPayloadSubscription;
-  vote: (
-    where?: VoteSubscriptionWhereInput
-  ) => VoteSubscriptionPayloadSubscription;
 }
 
 export interface ClientConstructor<T> {
@@ -175,17 +179,17 @@ export interface ClientConstructor<T> {
  * Types
  */
 
-export type LinkOrderByInput =
+export type TaskOrderByInput =
   | "id_ASC"
   | "id_DESC"
+  | "name_ASC"
+  | "name_DESC"
   | "createdAt_ASC"
   | "createdAt_DESC"
   | "description_ASC"
-  | "description_DESC"
-  | "url_ASC"
-  | "url_DESC";
+  | "description_DESC";
 
-export type VoteOrderByInput = "id_ASC" | "id_DESC";
+export type TodoOrderByInput = "id_ASC" | "id_DESC" | "name_ASC" | "name_DESC";
 
 export type UserOrderByInput =
   | "id_ASC"
@@ -199,11 +203,11 @@ export type UserOrderByInput =
 
 export type MutationType = "CREATED" | "UPDATED" | "DELETED";
 
-export type LinkWhereUniqueInput = AtLeastOne<{
+export type TaskWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
 }>;
 
-export interface LinkWhereInput {
+export interface TaskWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -218,6 +222,20 @@ export interface LinkWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -240,27 +258,13 @@ export interface LinkWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  postedBy?: Maybe<UserWhereInput>;
-  votes_every?: Maybe<VoteWhereInput>;
-  votes_some?: Maybe<VoteWhereInput>;
-  votes_none?: Maybe<VoteWhereInput>;
-  AND?: Maybe<LinkWhereInput[] | LinkWhereInput>;
-  OR?: Maybe<LinkWhereInput[] | LinkWhereInput>;
-  NOT?: Maybe<LinkWhereInput[] | LinkWhereInput>;
+  createdBy?: Maybe<UserWhereInput>;
+  todos_every?: Maybe<TodoWhereInput>;
+  todos_some?: Maybe<TodoWhereInput>;
+  todos_none?: Maybe<TodoWhereInput>;
+  AND?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  OR?: Maybe<TaskWhereInput[] | TaskWhereInput>;
+  NOT?: Maybe<TaskWhereInput[] | TaskWhereInput>;
 }
 
 export interface UserWhereInput {
@@ -320,18 +324,15 @@ export interface UserWhereInput {
   password_not_starts_with?: Maybe<String>;
   password_ends_with?: Maybe<String>;
   password_not_ends_with?: Maybe<String>;
-  links_every?: Maybe<LinkWhereInput>;
-  links_some?: Maybe<LinkWhereInput>;
-  links_none?: Maybe<LinkWhereInput>;
-  votes_every?: Maybe<VoteWhereInput>;
-  votes_some?: Maybe<VoteWhereInput>;
-  votes_none?: Maybe<VoteWhereInput>;
+  tasks_every?: Maybe<TaskWhereInput>;
+  tasks_some?: Maybe<TaskWhereInput>;
+  tasks_none?: Maybe<TaskWhereInput>;
   AND?: Maybe<UserWhereInput[] | UserWhereInput>;
   OR?: Maybe<UserWhereInput[] | UserWhereInput>;
   NOT?: Maybe<UserWhereInput[] | UserWhereInput>;
 }
 
-export interface VoteWhereInput {
+export interface TodoWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -346,280 +347,205 @@ export interface VoteWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
-  link?: Maybe<LinkWhereInput>;
-  user?: Maybe<UserWhereInput>;
-  AND?: Maybe<VoteWhereInput[] | VoteWhereInput>;
-  OR?: Maybe<VoteWhereInput[] | VoteWhereInput>;
-  NOT?: Maybe<VoteWhereInput[] | VoteWhereInput>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  taskId?: Maybe<TaskWhereInput>;
+  createdBy?: Maybe<UserWhereInput>;
+  AND?: Maybe<TodoWhereInput[] | TodoWhereInput>;
+  OR?: Maybe<TodoWhereInput[] | TodoWhereInput>;
+  NOT?: Maybe<TodoWhereInput[] | TodoWhereInput>;
 }
+
+export type TodoWhereUniqueInput = AtLeastOne<{
+  id: Maybe<ID_Input>;
+}>;
 
 export type UserWhereUniqueInput = AtLeastOne<{
   id: Maybe<ID_Input>;
   email?: Maybe<String>;
 }>;
 
-export type VoteWhereUniqueInput = AtLeastOne<{
-  id: Maybe<ID_Input>;
-}>;
-
-export interface LinkCreateInput {
+export interface TaskCreateInput {
   id?: Maybe<ID_Input>;
+  name: String;
   description: String;
-  url: String;
-  postedBy?: Maybe<UserCreateOneWithoutLinksInput>;
-  votes?: Maybe<VoteCreateManyWithoutLinkInput>;
+  createdBy?: Maybe<UserCreateOneWithoutTasksInput>;
+  todos?: Maybe<TodoCreateManyWithoutTaskIdInput>;
 }
 
-export interface UserCreateOneWithoutLinksInput {
-  create?: Maybe<UserCreateWithoutLinksInput>;
+export interface UserCreateOneWithoutTasksInput {
+  create?: Maybe<UserCreateWithoutTasksInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutLinksInput {
+export interface UserCreateWithoutTasksInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
-  votes?: Maybe<VoteCreateManyWithoutUserInput>;
 }
 
-export interface VoteCreateManyWithoutUserInput {
-  create?: Maybe<VoteCreateWithoutUserInput[] | VoteCreateWithoutUserInput>;
-  connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+export interface TodoCreateManyWithoutTaskIdInput {
+  create?: Maybe<TodoCreateWithoutTaskIdInput[] | TodoCreateWithoutTaskIdInput>;
+  connect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
 }
 
-export interface VoteCreateWithoutUserInput {
+export interface TodoCreateWithoutTaskIdInput {
   id?: Maybe<ID_Input>;
-  link: LinkCreateOneWithoutVotesInput;
+  name: String;
+  createdBy: UserCreateOneInput;
 }
 
-export interface LinkCreateOneWithoutVotesInput {
-  create?: Maybe<LinkCreateWithoutVotesInput>;
-  connect?: Maybe<LinkWhereUniqueInput>;
-}
-
-export interface LinkCreateWithoutVotesInput {
-  id?: Maybe<ID_Input>;
-  description: String;
-  url: String;
-  postedBy?: Maybe<UserCreateOneWithoutLinksInput>;
-}
-
-export interface VoteCreateManyWithoutLinkInput {
-  create?: Maybe<VoteCreateWithoutLinkInput[] | VoteCreateWithoutLinkInput>;
-  connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-}
-
-export interface VoteCreateWithoutLinkInput {
-  id?: Maybe<ID_Input>;
-  user: UserCreateOneWithoutVotesInput;
-}
-
-export interface UserCreateOneWithoutVotesInput {
-  create?: Maybe<UserCreateWithoutVotesInput>;
+export interface UserCreateOneInput {
+  create?: Maybe<UserCreateInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserCreateWithoutVotesInput {
+export interface UserCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
   email: String;
   password: String;
-  links?: Maybe<LinkCreateManyWithoutPostedByInput>;
+  tasks?: Maybe<TaskCreateManyWithoutCreatedByInput>;
 }
 
-export interface LinkCreateManyWithoutPostedByInput {
+export interface TaskCreateManyWithoutCreatedByInput {
   create?: Maybe<
-    LinkCreateWithoutPostedByInput[] | LinkCreateWithoutPostedByInput
+    TaskCreateWithoutCreatedByInput[] | TaskCreateWithoutCreatedByInput
   >;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
 }
 
-export interface LinkCreateWithoutPostedByInput {
+export interface TaskCreateWithoutCreatedByInput {
   id?: Maybe<ID_Input>;
+  name: String;
   description: String;
-  url: String;
-  votes?: Maybe<VoteCreateManyWithoutLinkInput>;
+  todos?: Maybe<TodoCreateManyWithoutTaskIdInput>;
 }
 
-export interface LinkUpdateInput {
+export interface TaskUpdateInput {
+  name?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneWithoutLinksInput>;
-  votes?: Maybe<VoteUpdateManyWithoutLinkInput>;
+  createdBy?: Maybe<UserUpdateOneWithoutTasksInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTaskIdInput>;
 }
 
-export interface UserUpdateOneWithoutLinksInput {
-  create?: Maybe<UserCreateWithoutLinksInput>;
-  update?: Maybe<UserUpdateWithoutLinksDataInput>;
-  upsert?: Maybe<UserUpsertWithoutLinksInput>;
+export interface UserUpdateOneWithoutTasksInput {
+  create?: Maybe<UserCreateWithoutTasksInput>;
+  update?: Maybe<UserUpdateWithoutTasksDataInput>;
+  upsert?: Maybe<UserUpsertWithoutTasksInput>;
   delete?: Maybe<Boolean>;
   disconnect?: Maybe<Boolean>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutLinksDataInput {
+export interface UserUpdateWithoutTasksDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
 }
 
-export interface VoteUpdateManyWithoutUserInput {
-  create?: Maybe<VoteCreateWithoutUserInput[] | VoteCreateWithoutUserInput>;
-  delete?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  set?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  disconnect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
+export interface UserUpsertWithoutTasksInput {
+  update: UserUpdateWithoutTasksDataInput;
+  create: UserCreateWithoutTasksInput;
+}
+
+export interface TodoUpdateManyWithoutTaskIdInput {
+  create?: Maybe<TodoCreateWithoutTaskIdInput[] | TodoCreateWithoutTaskIdInput>;
+  delete?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  connect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  set?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
+  disconnect?: Maybe<TodoWhereUniqueInput[] | TodoWhereUniqueInput>;
   update?: Maybe<
-    | VoteUpdateWithWhereUniqueWithoutUserInput[]
-    | VoteUpdateWithWhereUniqueWithoutUserInput
+    | TodoUpdateWithWhereUniqueWithoutTaskIdInput[]
+    | TodoUpdateWithWhereUniqueWithoutTaskIdInput
   >;
   upsert?: Maybe<
-    | VoteUpsertWithWhereUniqueWithoutUserInput[]
-    | VoteUpsertWithWhereUniqueWithoutUserInput
+    | TodoUpsertWithWhereUniqueWithoutTaskIdInput[]
+    | TodoUpsertWithWhereUniqueWithoutTaskIdInput
   >;
-  deleteMany?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-}
-
-export interface VoteUpdateWithWhereUniqueWithoutUserInput {
-  where: VoteWhereUniqueInput;
-  data: VoteUpdateWithoutUserDataInput;
-}
-
-export interface VoteUpdateWithoutUserDataInput {
-  link?: Maybe<LinkUpdateOneRequiredWithoutVotesInput>;
-}
-
-export interface LinkUpdateOneRequiredWithoutVotesInput {
-  create?: Maybe<LinkCreateWithoutVotesInput>;
-  update?: Maybe<LinkUpdateWithoutVotesDataInput>;
-  upsert?: Maybe<LinkUpsertWithoutVotesInput>;
-  connect?: Maybe<LinkWhereUniqueInput>;
-}
-
-export interface LinkUpdateWithoutVotesDataInput {
-  description?: Maybe<String>;
-  url?: Maybe<String>;
-  postedBy?: Maybe<UserUpdateOneWithoutLinksInput>;
-}
-
-export interface LinkUpsertWithoutVotesInput {
-  update: LinkUpdateWithoutVotesDataInput;
-  create: LinkCreateWithoutVotesInput;
-}
-
-export interface VoteUpsertWithWhereUniqueWithoutUserInput {
-  where: VoteWhereUniqueInput;
-  update: VoteUpdateWithoutUserDataInput;
-  create: VoteCreateWithoutUserInput;
-}
-
-export interface VoteScalarWhereInput {
-  id?: Maybe<ID_Input>;
-  id_not?: Maybe<ID_Input>;
-  id_in?: Maybe<ID_Input[] | ID_Input>;
-  id_not_in?: Maybe<ID_Input[] | ID_Input>;
-  id_lt?: Maybe<ID_Input>;
-  id_lte?: Maybe<ID_Input>;
-  id_gt?: Maybe<ID_Input>;
-  id_gte?: Maybe<ID_Input>;
-  id_contains?: Maybe<ID_Input>;
-  id_not_contains?: Maybe<ID_Input>;
-  id_starts_with?: Maybe<ID_Input>;
-  id_not_starts_with?: Maybe<ID_Input>;
-  id_ends_with?: Maybe<ID_Input>;
-  id_not_ends_with?: Maybe<ID_Input>;
-  AND?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-  OR?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-  NOT?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
-}
-
-export interface UserUpsertWithoutLinksInput {
-  update: UserUpdateWithoutLinksDataInput;
-  create: UserCreateWithoutLinksInput;
-}
-
-export interface VoteUpdateManyWithoutLinkInput {
-  create?: Maybe<VoteCreateWithoutLinkInput[] | VoteCreateWithoutLinkInput>;
-  delete?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  connect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  set?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  disconnect?: Maybe<VoteWhereUniqueInput[] | VoteWhereUniqueInput>;
-  update?: Maybe<
-    | VoteUpdateWithWhereUniqueWithoutLinkInput[]
-    | VoteUpdateWithWhereUniqueWithoutLinkInput
+  deleteMany?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  updateMany?: Maybe<
+    TodoUpdateManyWithWhereNestedInput[] | TodoUpdateManyWithWhereNestedInput
   >;
-  upsert?: Maybe<
-    | VoteUpsertWithWhereUniqueWithoutLinkInput[]
-    | VoteUpsertWithWhereUniqueWithoutLinkInput
-  >;
-  deleteMany?: Maybe<VoteScalarWhereInput[] | VoteScalarWhereInput>;
 }
 
-export interface VoteUpdateWithWhereUniqueWithoutLinkInput {
-  where: VoteWhereUniqueInput;
-  data: VoteUpdateWithoutLinkDataInput;
+export interface TodoUpdateWithWhereUniqueWithoutTaskIdInput {
+  where: TodoWhereUniqueInput;
+  data: TodoUpdateWithoutTaskIdDataInput;
 }
 
-export interface VoteUpdateWithoutLinkDataInput {
-  user?: Maybe<UserUpdateOneRequiredWithoutVotesInput>;
+export interface TodoUpdateWithoutTaskIdDataInput {
+  name?: Maybe<String>;
+  createdBy?: Maybe<UserUpdateOneRequiredInput>;
 }
 
-export interface UserUpdateOneRequiredWithoutVotesInput {
-  create?: Maybe<UserCreateWithoutVotesInput>;
-  update?: Maybe<UserUpdateWithoutVotesDataInput>;
-  upsert?: Maybe<UserUpsertWithoutVotesInput>;
+export interface UserUpdateOneRequiredInput {
+  create?: Maybe<UserCreateInput>;
+  update?: Maybe<UserUpdateDataInput>;
+  upsert?: Maybe<UserUpsertNestedInput>;
   connect?: Maybe<UserWhereUniqueInput>;
 }
 
-export interface UserUpdateWithoutVotesDataInput {
+export interface UserUpdateDataInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  links?: Maybe<LinkUpdateManyWithoutPostedByInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutCreatedByInput>;
 }
 
-export interface LinkUpdateManyWithoutPostedByInput {
+export interface TaskUpdateManyWithoutCreatedByInput {
   create?: Maybe<
-    LinkCreateWithoutPostedByInput[] | LinkCreateWithoutPostedByInput
+    TaskCreateWithoutCreatedByInput[] | TaskCreateWithoutCreatedByInput
   >;
-  delete?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  connect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  set?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
-  disconnect?: Maybe<LinkWhereUniqueInput[] | LinkWhereUniqueInput>;
+  delete?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  connect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  set?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
+  disconnect?: Maybe<TaskWhereUniqueInput[] | TaskWhereUniqueInput>;
   update?: Maybe<
-    | LinkUpdateWithWhereUniqueWithoutPostedByInput[]
-    | LinkUpdateWithWhereUniqueWithoutPostedByInput
+    | TaskUpdateWithWhereUniqueWithoutCreatedByInput[]
+    | TaskUpdateWithWhereUniqueWithoutCreatedByInput
   >;
   upsert?: Maybe<
-    | LinkUpsertWithWhereUniqueWithoutPostedByInput[]
-    | LinkUpsertWithWhereUniqueWithoutPostedByInput
+    | TaskUpsertWithWhereUniqueWithoutCreatedByInput[]
+    | TaskUpsertWithWhereUniqueWithoutCreatedByInput
   >;
-  deleteMany?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  deleteMany?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
   updateMany?: Maybe<
-    LinkUpdateManyWithWhereNestedInput[] | LinkUpdateManyWithWhereNestedInput
+    TaskUpdateManyWithWhereNestedInput[] | TaskUpdateManyWithWhereNestedInput
   >;
 }
 
-export interface LinkUpdateWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput;
-  data: LinkUpdateWithoutPostedByDataInput;
+export interface TaskUpdateWithWhereUniqueWithoutCreatedByInput {
+  where: TaskWhereUniqueInput;
+  data: TaskUpdateWithoutCreatedByDataInput;
 }
 
-export interface LinkUpdateWithoutPostedByDataInput {
+export interface TaskUpdateWithoutCreatedByDataInput {
+  name?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
-  votes?: Maybe<VoteUpdateManyWithoutLinkInput>;
+  todos?: Maybe<TodoUpdateManyWithoutTaskIdInput>;
 }
 
-export interface LinkUpsertWithWhereUniqueWithoutPostedByInput {
-  where: LinkWhereUniqueInput;
-  update: LinkUpdateWithoutPostedByDataInput;
-  create: LinkCreateWithoutPostedByInput;
+export interface TaskUpsertWithWhereUniqueWithoutCreatedByInput {
+  where: TaskWhereUniqueInput;
+  update: TaskUpdateWithoutCreatedByDataInput;
+  create: TaskCreateWithoutCreatedByInput;
 }
 
-export interface LinkScalarWhereInput {
+export interface TaskScalarWhereInput {
   id?: Maybe<ID_Input>;
   id_not?: Maybe<ID_Input>;
   id_in?: Maybe<ID_Input[] | ID_Input>;
@@ -634,6 +560,20 @@ export interface LinkScalarWhereInput {
   id_not_starts_with?: Maybe<ID_Input>;
   id_ends_with?: Maybe<ID_Input>;
   id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
   createdAt?: Maybe<DateTimeInput>;
   createdAt_not?: Maybe<DateTimeInput>;
   createdAt_in?: Maybe<DateTimeInput[] | DateTimeInput>;
@@ -656,66 +596,132 @@ export interface LinkScalarWhereInput {
   description_not_starts_with?: Maybe<String>;
   description_ends_with?: Maybe<String>;
   description_not_ends_with?: Maybe<String>;
-  url?: Maybe<String>;
-  url_not?: Maybe<String>;
-  url_in?: Maybe<String[] | String>;
-  url_not_in?: Maybe<String[] | String>;
-  url_lt?: Maybe<String>;
-  url_lte?: Maybe<String>;
-  url_gt?: Maybe<String>;
-  url_gte?: Maybe<String>;
-  url_contains?: Maybe<String>;
-  url_not_contains?: Maybe<String>;
-  url_starts_with?: Maybe<String>;
-  url_not_starts_with?: Maybe<String>;
-  url_ends_with?: Maybe<String>;
-  url_not_ends_with?: Maybe<String>;
-  AND?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  OR?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
-  NOT?: Maybe<LinkScalarWhereInput[] | LinkScalarWhereInput>;
+  AND?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
+  OR?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
+  NOT?: Maybe<TaskScalarWhereInput[] | TaskScalarWhereInput>;
 }
 
-export interface LinkUpdateManyWithWhereNestedInput {
-  where: LinkScalarWhereInput;
-  data: LinkUpdateManyDataInput;
+export interface TaskUpdateManyWithWhereNestedInput {
+  where: TaskScalarWhereInput;
+  data: TaskUpdateManyDataInput;
 }
 
-export interface LinkUpdateManyDataInput {
+export interface TaskUpdateManyDataInput {
+  name?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
 }
 
-export interface UserUpsertWithoutVotesInput {
-  update: UserUpdateWithoutVotesDataInput;
-  create: UserCreateWithoutVotesInput;
+export interface UserUpsertNestedInput {
+  update: UserUpdateDataInput;
+  create: UserCreateInput;
 }
 
-export interface VoteUpsertWithWhereUniqueWithoutLinkInput {
-  where: VoteWhereUniqueInput;
-  update: VoteUpdateWithoutLinkDataInput;
-  create: VoteCreateWithoutLinkInput;
+export interface TodoUpsertWithWhereUniqueWithoutTaskIdInput {
+  where: TodoWhereUniqueInput;
+  update: TodoUpdateWithoutTaskIdDataInput;
+  create: TodoCreateWithoutTaskIdInput;
 }
 
-export interface LinkUpdateManyMutationInput {
+export interface TodoScalarWhereInput {
+  id?: Maybe<ID_Input>;
+  id_not?: Maybe<ID_Input>;
+  id_in?: Maybe<ID_Input[] | ID_Input>;
+  id_not_in?: Maybe<ID_Input[] | ID_Input>;
+  id_lt?: Maybe<ID_Input>;
+  id_lte?: Maybe<ID_Input>;
+  id_gt?: Maybe<ID_Input>;
+  id_gte?: Maybe<ID_Input>;
+  id_contains?: Maybe<ID_Input>;
+  id_not_contains?: Maybe<ID_Input>;
+  id_starts_with?: Maybe<ID_Input>;
+  id_not_starts_with?: Maybe<ID_Input>;
+  id_ends_with?: Maybe<ID_Input>;
+  id_not_ends_with?: Maybe<ID_Input>;
+  name?: Maybe<String>;
+  name_not?: Maybe<String>;
+  name_in?: Maybe<String[] | String>;
+  name_not_in?: Maybe<String[] | String>;
+  name_lt?: Maybe<String>;
+  name_lte?: Maybe<String>;
+  name_gt?: Maybe<String>;
+  name_gte?: Maybe<String>;
+  name_contains?: Maybe<String>;
+  name_not_contains?: Maybe<String>;
+  name_starts_with?: Maybe<String>;
+  name_not_starts_with?: Maybe<String>;
+  name_ends_with?: Maybe<String>;
+  name_not_ends_with?: Maybe<String>;
+  AND?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  OR?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+  NOT?: Maybe<TodoScalarWhereInput[] | TodoScalarWhereInput>;
+}
+
+export interface TodoUpdateManyWithWhereNestedInput {
+  where: TodoScalarWhereInput;
+  data: TodoUpdateManyDataInput;
+}
+
+export interface TodoUpdateManyDataInput {
+  name?: Maybe<String>;
+}
+
+export interface TaskUpdateManyMutationInput {
+  name?: Maybe<String>;
   description?: Maybe<String>;
-  url?: Maybe<String>;
 }
 
-export interface UserCreateInput {
+export interface TodoCreateInput {
   id?: Maybe<ID_Input>;
   name: String;
-  email: String;
-  password: String;
-  links?: Maybe<LinkCreateManyWithoutPostedByInput>;
-  votes?: Maybe<VoteCreateManyWithoutUserInput>;
+  taskId: TaskCreateOneWithoutTodosInput;
+  createdBy: UserCreateOneInput;
+}
+
+export interface TaskCreateOneWithoutTodosInput {
+  create?: Maybe<TaskCreateWithoutTodosInput>;
+  connect?: Maybe<TaskWhereUniqueInput>;
+}
+
+export interface TaskCreateWithoutTodosInput {
+  id?: Maybe<ID_Input>;
+  name: String;
+  description: String;
+  createdBy?: Maybe<UserCreateOneWithoutTasksInput>;
+}
+
+export interface TodoUpdateInput {
+  name?: Maybe<String>;
+  taskId?: Maybe<TaskUpdateOneRequiredWithoutTodosInput>;
+  createdBy?: Maybe<UserUpdateOneRequiredInput>;
+}
+
+export interface TaskUpdateOneRequiredWithoutTodosInput {
+  create?: Maybe<TaskCreateWithoutTodosInput>;
+  update?: Maybe<TaskUpdateWithoutTodosDataInput>;
+  upsert?: Maybe<TaskUpsertWithoutTodosInput>;
+  connect?: Maybe<TaskWhereUniqueInput>;
+}
+
+export interface TaskUpdateWithoutTodosDataInput {
+  name?: Maybe<String>;
+  description?: Maybe<String>;
+  createdBy?: Maybe<UserUpdateOneWithoutTasksInput>;
+}
+
+export interface TaskUpsertWithoutTodosInput {
+  update: TaskUpdateWithoutTodosDataInput;
+  create: TaskCreateWithoutTodosInput;
+}
+
+export interface TodoUpdateManyMutationInput {
+  name?: Maybe<String>;
 }
 
 export interface UserUpdateInput {
   name?: Maybe<String>;
   email?: Maybe<String>;
   password?: Maybe<String>;
-  links?: Maybe<LinkUpdateManyWithoutPostedByInput>;
-  votes?: Maybe<VoteUpdateManyWithoutUserInput>;
+  tasks?: Maybe<TaskUpdateManyWithoutCreatedByInput>;
 }
 
 export interface UserUpdateManyMutationInput {
@@ -724,26 +730,26 @@ export interface UserUpdateManyMutationInput {
   password?: Maybe<String>;
 }
 
-export interface VoteCreateInput {
-  id?: Maybe<ID_Input>;
-  link: LinkCreateOneWithoutVotesInput;
-  user: UserCreateOneWithoutVotesInput;
-}
-
-export interface VoteUpdateInput {
-  link?: Maybe<LinkUpdateOneRequiredWithoutVotesInput>;
-  user?: Maybe<UserUpdateOneRequiredWithoutVotesInput>;
-}
-
-export interface LinkSubscriptionWhereInput {
+export interface TaskSubscriptionWhereInput {
   mutation_in?: Maybe<MutationType[] | MutationType>;
   updatedFields_contains?: Maybe<String>;
   updatedFields_contains_every?: Maybe<String[] | String>;
   updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<LinkWhereInput>;
-  AND?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  OR?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
-  NOT?: Maybe<LinkSubscriptionWhereInput[] | LinkSubscriptionWhereInput>;
+  node?: Maybe<TaskWhereInput>;
+  AND?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  OR?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+  NOT?: Maybe<TaskSubscriptionWhereInput[] | TaskSubscriptionWhereInput>;
+}
+
+export interface TodoSubscriptionWhereInput {
+  mutation_in?: Maybe<MutationType[] | MutationType>;
+  updatedFields_contains?: Maybe<String>;
+  updatedFields_contains_every?: Maybe<String[] | String>;
+  updatedFields_contains_some?: Maybe<String[] | String>;
+  node?: Maybe<TodoWhereInput>;
+  AND?: Maybe<TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput>;
+  OR?: Maybe<TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput>;
+  NOT?: Maybe<TodoSubscriptionWhereInput[] | TodoSubscriptionWhereInput>;
 }
 
 export interface UserSubscriptionWhereInput {
@@ -757,37 +763,26 @@ export interface UserSubscriptionWhereInput {
   NOT?: Maybe<UserSubscriptionWhereInput[] | UserSubscriptionWhereInput>;
 }
 
-export interface VoteSubscriptionWhereInput {
-  mutation_in?: Maybe<MutationType[] | MutationType>;
-  updatedFields_contains?: Maybe<String>;
-  updatedFields_contains_every?: Maybe<String[] | String>;
-  updatedFields_contains_some?: Maybe<String[] | String>;
-  node?: Maybe<VoteWhereInput>;
-  AND?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
-  OR?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
-  NOT?: Maybe<VoteSubscriptionWhereInput[] | VoteSubscriptionWhereInput>;
-}
-
 export interface NodeNode {
   id: ID_Output;
 }
 
-export interface Link {
+export interface Task {
   id: ID_Output;
+  name: String;
   createdAt: DateTimeOutput;
   description: String;
-  url: String;
 }
 
-export interface LinkPromise extends Promise<Link>, Fragmentable {
+export interface TaskPromise extends Promise<Task>, Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
-  url: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
-  votes: <T = FragmentableArray<Vote>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
+  createdBy: <T = UserPromise>() => T;
+  todos: <T = FragmentableArray<Todo>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -796,17 +791,17 @@ export interface LinkPromise extends Promise<Link>, Fragmentable {
   }) => T;
 }
 
-export interface LinkSubscription
-  extends Promise<AsyncIterator<Link>>,
+export interface TaskSubscription
+  extends Promise<AsyncIterator<Task>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
-  postedBy: <T = UserSubscription>() => T;
-  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
+  createdBy: <T = UserSubscription>() => T;
+  todos: <T = Promise<AsyncIterator<TodoSubscription>>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -815,17 +810,17 @@ export interface LinkSubscription
   }) => T;
 }
 
-export interface LinkNullablePromise
-  extends Promise<Link | null>,
+export interface TaskNullablePromise
+  extends Promise<Task | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
-  url: () => Promise<String>;
-  postedBy: <T = UserPromise>() => T;
-  votes: <T = FragmentableArray<Vote>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
+  createdBy: <T = UserPromise>() => T;
+  todos: <T = FragmentableArray<Todo>>(args?: {
+    where?: TodoWhereInput;
+    orderBy?: TodoOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -846,18 +841,9 @@ export interface UserPromise extends Promise<User>, Fragmentable {
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  votes: <T = FragmentableArray<Vote>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
+  tasks: <T = FragmentableArray<Task>>(args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -873,18 +859,9 @@ export interface UserSubscription
   name: () => Promise<AsyncIterator<String>>;
   email: () => Promise<AsyncIterator<String>>;
   password: () => Promise<AsyncIterator<String>>;
-  links: <T = Promise<AsyncIterator<LinkSubscription>>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  votes: <T = Promise<AsyncIterator<VoteSubscription>>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
+  tasks: <T = Promise<AsyncIterator<TaskSubscription>>>(args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -900,18 +877,9 @@ export interface UserNullablePromise
   name: () => Promise<String>;
   email: () => Promise<String>;
   password: () => Promise<String>;
-  links: <T = FragmentableArray<Link>>(args?: {
-    where?: LinkWhereInput;
-    orderBy?: LinkOrderByInput;
-    skip?: Int;
-    after?: String;
-    before?: String;
-    first?: Int;
-    last?: Int;
-  }) => T;
-  votes: <T = FragmentableArray<Vote>>(args?: {
-    where?: VoteWhereInput;
-    orderBy?: VoteOrderByInput;
+  tasks: <T = FragmentableArray<Task>>(args?: {
+    where?: TaskWhereInput;
+    orderBy?: TaskOrderByInput;
     skip?: Int;
     after?: String;
     before?: String;
@@ -920,51 +888,55 @@ export interface UserNullablePromise
   }) => T;
 }
 
-export interface Vote {
+export interface Todo {
   id: ID_Output;
+  name: String;
 }
 
-export interface VotePromise extends Promise<Vote>, Fragmentable {
+export interface TodoPromise extends Promise<Todo>, Fragmentable {
   id: () => Promise<ID_Output>;
-  link: <T = LinkPromise>() => T;
-  user: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  taskId: <T = TaskPromise>() => T;
+  createdBy: <T = UserPromise>() => T;
 }
 
-export interface VoteSubscription
-  extends Promise<AsyncIterator<Vote>>,
+export interface TodoSubscription
+  extends Promise<AsyncIterator<Todo>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
-  link: <T = LinkSubscription>() => T;
-  user: <T = UserSubscription>() => T;
+  name: () => Promise<AsyncIterator<String>>;
+  taskId: <T = TaskSubscription>() => T;
+  createdBy: <T = UserSubscription>() => T;
 }
 
-export interface VoteNullablePromise
-  extends Promise<Vote | null>,
+export interface TodoNullablePromise
+  extends Promise<Todo | null>,
     Fragmentable {
   id: () => Promise<ID_Output>;
-  link: <T = LinkPromise>() => T;
-  user: <T = UserPromise>() => T;
+  name: () => Promise<String>;
+  taskId: <T = TaskPromise>() => T;
+  createdBy: <T = UserPromise>() => T;
 }
 
-export interface LinkConnection {
+export interface TaskConnection {
   pageInfo: PageInfo;
-  edges: LinkEdge[];
+  edges: TaskEdge[];
 }
 
-export interface LinkConnectionPromise
-  extends Promise<LinkConnection>,
+export interface TaskConnectionPromise
+  extends Promise<TaskConnection>,
     Fragmentable {
   pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<LinkEdge>>() => T;
-  aggregate: <T = AggregateLinkPromise>() => T;
+  edges: <T = FragmentableArray<TaskEdge>>() => T;
+  aggregate: <T = AggregateTaskPromise>() => T;
 }
 
-export interface LinkConnectionSubscription
-  extends Promise<AsyncIterator<LinkConnection>>,
+export interface TaskConnectionSubscription
+  extends Promise<AsyncIterator<TaskConnection>>,
     Fragmentable {
   pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<LinkEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateLinkSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TaskEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTaskSubscription>() => T;
 }
 
 export interface PageInfo {
@@ -990,35 +962,89 @@ export interface PageInfoSubscription
   endCursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface LinkEdge {
-  node: Link;
+export interface TaskEdge {
+  node: Task;
   cursor: String;
 }
 
-export interface LinkEdgePromise extends Promise<LinkEdge>, Fragmentable {
-  node: <T = LinkPromise>() => T;
+export interface TaskEdgePromise extends Promise<TaskEdge>, Fragmentable {
+  node: <T = TaskPromise>() => T;
   cursor: () => Promise<String>;
 }
 
-export interface LinkEdgeSubscription
-  extends Promise<AsyncIterator<LinkEdge>>,
+export interface TaskEdgeSubscription
+  extends Promise<AsyncIterator<TaskEdge>>,
     Fragmentable {
-  node: <T = LinkSubscription>() => T;
+  node: <T = TaskSubscription>() => T;
   cursor: () => Promise<AsyncIterator<String>>;
 }
 
-export interface AggregateLink {
+export interface AggregateTask {
   count: Int;
 }
 
-export interface AggregateLinkPromise
-  extends Promise<AggregateLink>,
+export interface AggregateTaskPromise
+  extends Promise<AggregateTask>,
     Fragmentable {
   count: () => Promise<Int>;
 }
 
-export interface AggregateLinkSubscription
-  extends Promise<AsyncIterator<AggregateLink>>,
+export interface AggregateTaskSubscription
+  extends Promise<AsyncIterator<AggregateTask>>,
+    Fragmentable {
+  count: () => Promise<AsyncIterator<Int>>;
+}
+
+export interface TodoConnection {
+  pageInfo: PageInfo;
+  edges: TodoEdge[];
+}
+
+export interface TodoConnectionPromise
+  extends Promise<TodoConnection>,
+    Fragmentable {
+  pageInfo: <T = PageInfoPromise>() => T;
+  edges: <T = FragmentableArray<TodoEdge>>() => T;
+  aggregate: <T = AggregateTodoPromise>() => T;
+}
+
+export interface TodoConnectionSubscription
+  extends Promise<AsyncIterator<TodoConnection>>,
+    Fragmentable {
+  pageInfo: <T = PageInfoSubscription>() => T;
+  edges: <T = Promise<AsyncIterator<TodoEdgeSubscription>>>() => T;
+  aggregate: <T = AggregateTodoSubscription>() => T;
+}
+
+export interface TodoEdge {
+  node: Todo;
+  cursor: String;
+}
+
+export interface TodoEdgePromise extends Promise<TodoEdge>, Fragmentable {
+  node: <T = TodoPromise>() => T;
+  cursor: () => Promise<String>;
+}
+
+export interface TodoEdgeSubscription
+  extends Promise<AsyncIterator<TodoEdge>>,
+    Fragmentable {
+  node: <T = TodoSubscription>() => T;
+  cursor: () => Promise<AsyncIterator<String>>;
+}
+
+export interface AggregateTodo {
+  count: Int;
+}
+
+export interface AggregateTodoPromise
+  extends Promise<AggregateTodo>,
+    Fragmentable {
+  count: () => Promise<Int>;
+}
+
+export interface AggregateTodoSubscription
+  extends Promise<AsyncIterator<AggregateTodo>>,
     Fragmentable {
   count: () => Promise<AsyncIterator<Int>>;
 }
@@ -1077,60 +1103,6 @@ export interface AggregateUserSubscription
   count: () => Promise<AsyncIterator<Int>>;
 }
 
-export interface VoteConnection {
-  pageInfo: PageInfo;
-  edges: VoteEdge[];
-}
-
-export interface VoteConnectionPromise
-  extends Promise<VoteConnection>,
-    Fragmentable {
-  pageInfo: <T = PageInfoPromise>() => T;
-  edges: <T = FragmentableArray<VoteEdge>>() => T;
-  aggregate: <T = AggregateVotePromise>() => T;
-}
-
-export interface VoteConnectionSubscription
-  extends Promise<AsyncIterator<VoteConnection>>,
-    Fragmentable {
-  pageInfo: <T = PageInfoSubscription>() => T;
-  edges: <T = Promise<AsyncIterator<VoteEdgeSubscription>>>() => T;
-  aggregate: <T = AggregateVoteSubscription>() => T;
-}
-
-export interface VoteEdge {
-  node: Vote;
-  cursor: String;
-}
-
-export interface VoteEdgePromise extends Promise<VoteEdge>, Fragmentable {
-  node: <T = VotePromise>() => T;
-  cursor: () => Promise<String>;
-}
-
-export interface VoteEdgeSubscription
-  extends Promise<AsyncIterator<VoteEdge>>,
-    Fragmentable {
-  node: <T = VoteSubscription>() => T;
-  cursor: () => Promise<AsyncIterator<String>>;
-}
-
-export interface AggregateVote {
-  count: Int;
-}
-
-export interface AggregateVotePromise
-  extends Promise<AggregateVote>,
-    Fragmentable {
-  count: () => Promise<Int>;
-}
-
-export interface AggregateVoteSubscription
-  extends Promise<AsyncIterator<AggregateVote>>,
-    Fragmentable {
-  count: () => Promise<AsyncIterator<Int>>;
-}
-
 export interface BatchPayload {
   count: Long;
 }
@@ -1147,54 +1119,98 @@ export interface BatchPayloadSubscription
   count: () => Promise<AsyncIterator<Long>>;
 }
 
-export interface LinkSubscriptionPayload {
+export interface TaskSubscriptionPayload {
   mutation: MutationType;
-  node: Link;
+  node: Task;
   updatedFields: String[];
-  previousValues: LinkPreviousValues;
+  previousValues: TaskPreviousValues;
 }
 
-export interface LinkSubscriptionPayloadPromise
-  extends Promise<LinkSubscriptionPayload>,
+export interface TaskSubscriptionPayloadPromise
+  extends Promise<TaskSubscriptionPayload>,
     Fragmentable {
   mutation: () => Promise<MutationType>;
-  node: <T = LinkPromise>() => T;
+  node: <T = TaskPromise>() => T;
   updatedFields: () => Promise<String[]>;
-  previousValues: <T = LinkPreviousValuesPromise>() => T;
+  previousValues: <T = TaskPreviousValuesPromise>() => T;
 }
 
-export interface LinkSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<LinkSubscriptionPayload>>,
+export interface TaskSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TaskSubscriptionPayload>>,
     Fragmentable {
   mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = LinkSubscription>() => T;
+  node: <T = TaskSubscription>() => T;
   updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = LinkPreviousValuesSubscription>() => T;
+  previousValues: <T = TaskPreviousValuesSubscription>() => T;
 }
 
-export interface LinkPreviousValues {
+export interface TaskPreviousValues {
   id: ID_Output;
+  name: String;
   createdAt: DateTimeOutput;
   description: String;
-  url: String;
 }
 
-export interface LinkPreviousValuesPromise
-  extends Promise<LinkPreviousValues>,
+export interface TaskPreviousValuesPromise
+  extends Promise<TaskPreviousValues>,
     Fragmentable {
   id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
   createdAt: () => Promise<DateTimeOutput>;
   description: () => Promise<String>;
-  url: () => Promise<String>;
 }
 
-export interface LinkPreviousValuesSubscription
-  extends Promise<AsyncIterator<LinkPreviousValues>>,
+export interface TaskPreviousValuesSubscription
+  extends Promise<AsyncIterator<TaskPreviousValues>>,
     Fragmentable {
   id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
   createdAt: () => Promise<AsyncIterator<DateTimeOutput>>;
   description: () => Promise<AsyncIterator<String>>;
-  url: () => Promise<AsyncIterator<String>>;
+}
+
+export interface TodoSubscriptionPayload {
+  mutation: MutationType;
+  node: Todo;
+  updatedFields: String[];
+  previousValues: TodoPreviousValues;
+}
+
+export interface TodoSubscriptionPayloadPromise
+  extends Promise<TodoSubscriptionPayload>,
+    Fragmentable {
+  mutation: () => Promise<MutationType>;
+  node: <T = TodoPromise>() => T;
+  updatedFields: () => Promise<String[]>;
+  previousValues: <T = TodoPreviousValuesPromise>() => T;
+}
+
+export interface TodoSubscriptionPayloadSubscription
+  extends Promise<AsyncIterator<TodoSubscriptionPayload>>,
+    Fragmentable {
+  mutation: () => Promise<AsyncIterator<MutationType>>;
+  node: <T = TodoSubscription>() => T;
+  updatedFields: () => Promise<AsyncIterator<String[]>>;
+  previousValues: <T = TodoPreviousValuesSubscription>() => T;
+}
+
+export interface TodoPreviousValues {
+  id: ID_Output;
+  name: String;
+}
+
+export interface TodoPreviousValuesPromise
+  extends Promise<TodoPreviousValues>,
+    Fragmentable {
+  id: () => Promise<ID_Output>;
+  name: () => Promise<String>;
+}
+
+export interface TodoPreviousValuesSubscription
+  extends Promise<AsyncIterator<TodoPreviousValues>>,
+    Fragmentable {
+  id: () => Promise<AsyncIterator<ID_Output>>;
+  name: () => Promise<AsyncIterator<String>>;
 }
 
 export interface UserSubscriptionPayload {
@@ -1247,52 +1263,16 @@ export interface UserPreviousValuesSubscription
   password: () => Promise<AsyncIterator<String>>;
 }
 
-export interface VoteSubscriptionPayload {
-  mutation: MutationType;
-  node: Vote;
-  updatedFields: String[];
-  previousValues: VotePreviousValues;
-}
-
-export interface VoteSubscriptionPayloadPromise
-  extends Promise<VoteSubscriptionPayload>,
-    Fragmentable {
-  mutation: () => Promise<MutationType>;
-  node: <T = VotePromise>() => T;
-  updatedFields: () => Promise<String[]>;
-  previousValues: <T = VotePreviousValuesPromise>() => T;
-}
-
-export interface VoteSubscriptionPayloadSubscription
-  extends Promise<AsyncIterator<VoteSubscriptionPayload>>,
-    Fragmentable {
-  mutation: () => Promise<AsyncIterator<MutationType>>;
-  node: <T = VoteSubscription>() => T;
-  updatedFields: () => Promise<AsyncIterator<String[]>>;
-  previousValues: <T = VotePreviousValuesSubscription>() => T;
-}
-
-export interface VotePreviousValues {
-  id: ID_Output;
-}
-
-export interface VotePreviousValuesPromise
-  extends Promise<VotePreviousValues>,
-    Fragmentable {
-  id: () => Promise<ID_Output>;
-}
-
-export interface VotePreviousValuesSubscription
-  extends Promise<AsyncIterator<VotePreviousValues>>,
-    Fragmentable {
-  id: () => Promise<AsyncIterator<ID_Output>>;
-}
-
 /*
 The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
 */
 export type ID_Input = string | number;
 export type ID_Output = string;
+
+/*
+The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
+*/
+export type String = string;
 
 /*
 DateTime scalar input type, allowing Date
@@ -1303,11 +1283,6 @@ export type DateTimeInput = Date | string;
 DateTime scalar output type, which is always a string
 */
 export type DateTimeOutput = string;
-
-/*
-The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text.
-*/
-export type String = string;
 
 /*
 The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1.
@@ -1327,7 +1302,7 @@ export type Long = string;
 
 export const models: Model[] = [
   {
-    name: "Link",
+    name: "Task",
     embedded: false
   },
   {
@@ -1335,7 +1310,7 @@ export const models: Model[] = [
     embedded: false
   },
   {
-    name: "Vote",
+    name: "Todo",
     embedded: false
   }
 ];

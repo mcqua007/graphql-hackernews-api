@@ -1,10 +1,10 @@
-type Link {
+type Task {
   id: ID! @id
+  name: String!
   createdAt: DateTime! @createdAt
-  description: String!
-  url: String!
-  postedBy: User
-  votes: [Vote!]!
+  description: String!  
+  createdBy: User
+  todos: [Todo!]!
 }
 
 type User {
@@ -12,12 +12,12 @@ type User {
   name: String!
   email: String! @unique
   password: String!
-  links: [Link!]!
-  votes: [Vote!]!
+  tasks: [Task!]!
 }
 
-type Vote {
+type Todo {
   id: ID! @id
-  link: Link!
-  user: User!
+  name: String!
+  taskId: Task!
+  createdBy: User!
 }

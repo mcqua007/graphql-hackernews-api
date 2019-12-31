@@ -1,21 +1,23 @@
 type Query {
-  info: String!
-  feed: [Link!]!
+  tasks: [Task!]!
+  task(id: String!): Task!
+  users: [User!]!
+  user: User!
 }
 
 type Mutation {
-  post(url: String!, description: String!): Link!
+  createTask(name: String!, description: String!): Task!
   signup(email: String!, password: String!, name: String!): AuthPayload
   login(email: String!, password: String!): AuthPayload
-  vote(linkId: ID!): Vote
+  createTodo(name: String!, taskId: String!): Todo!
 }
 
-type Link {
+type Task {
   id: ID!
+  name: String!
   description: String!
-  url: String!
-  postedBy: User
-  votes: [Vote!]!
+  createdBy: User
+  todos: [Todo!]!
 }
 
 type AuthPayload {
@@ -27,16 +29,17 @@ type User {
   id: ID!
   name: String!
   email: String!
-  links: [Link!]!
+  tasks: [Task!]!
 }
 
 type Subscription {
-  newLink: Link
-  newVote: Vote
+  newTask: Task
+  newTodo: Todo
 }
 
-type Vote {
+type Todo {
   id: ID!
-  link: Link!
-  user: User!
+  name: String!
+  taskId: Task!
+  createdBy: User!
 }
